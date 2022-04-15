@@ -256,7 +256,7 @@ function playerVAI() {
                     playerTurn.textContent=players[1]['name'] + " Wins!";
                     winner=true;
                 }
-            },650);
+            },700);
                 freeSquare=[];
             }
             if(winner===false&&(players[0]['moves'].length+players[1]['moves'].length===9)){

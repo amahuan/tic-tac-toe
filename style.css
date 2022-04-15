@@ -73,7 +73,7 @@ body {
 .altLetter {
     color: white;
 }
-
+/*tic tac toe grid*/
 .grid {
     display: grid;
     grid-template-columns: 125px 125px 125px;
@@ -99,12 +99,12 @@ body {
 .card:hover {
     background-color: rgb(174, 225, 255);
 }
-
+/*if card is played, cannot click again*/
 .card.x,
 .card.o {
     cursor: not-allowed;
 }
-
+/*player panels with name and marker*/
 .player {
     display: grid;
     grid-template-columns: 1fr;
@@ -131,6 +131,7 @@ h2 {
     font-family: 'Poppins-Bold';
     text-align: center;
     font-size: 0.8em;
+    white-space: nowrap;
 }
 
 h3 {
@@ -155,19 +156,40 @@ h3#nameO, h3#nameX {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+/*play game button which causes modal to pop up*/
+.startGame {
+    display: flex;
+    position: absolute;
+    top: 25vh;
+    left: 25vw;
+    width: 50vw;
+    height: 50vh;
+    background-color: black;
+    justify-items: center;
+    align-items: center;
+    padding: 20vh 15vw;
+}
 
-input[type='radio'] {
+.startGame button {
+    width: 20vw;
+    height: 10vh;
+    font-family: 'Poppins-Regular';
+    font-weight: 800;
+    font-size: 25px;
+    border-color: white;
+    border-style: solid;
     color: white;
-    width: 30px;
-    margin-right: 0;
-
+    background-color: black;
+    border-width: 0.7rem;
 }
 
-.playerName label {
-    font-size: 0.7rem;
-    position: relative;
+.startGame button:hover {
+    border-color: var(--pink);
+    color: var(--pink);
+    background-color: black;
+    border-width: 0.7rem;
+    cursor: pointer;
 }
-
 /*modal for user to enter book information that will be used to create book cards*/
 .modal {
     display: flex;
@@ -203,7 +225,7 @@ input[type='radio'] {
 .modal {
     display: none;
 }
-  
+
 .playerName {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -227,40 +249,6 @@ input[type='text']:focus {
     border-style: solid;
     border-width: 3px;
     outline: none;
-}
-
-.startGame {
-    display: flex;
-    position: absolute;
-    top: 25vh;
-    left: 25vw;
-    width: 50vw;
-    height: 50vh;
-    background-color: black;
-    justify-items: center;
-    align-items: center;
-    padding: 20vh 15vw;
-}
-
-.startGame button {
-    width: 20vw;
-    height: 10vh;
-    font-family: 'Poppins-Regular';
-    font-weight: 800;
-    font-size: 25px;
-    border-color: white;
-    border-style: solid;
-    color: white;
-    background-color: black;
-    border-width: 0.7rem;
-}
-
-.startGame button:hover {
-    border-color: var(--pink);
-    color: var(--pink);
-    background-color: black;
-    border-width: 0.7rem;
-    cursor: pointer;
 }
 
 .submission {
@@ -287,6 +275,11 @@ button[type='submit']:hover {
     color: white;
     font-weight: 600;
 }
+/*indicates whose turn it is or who won*/
+.currentPlayer {
+    padding-bottom: 2rem;
+    height: 3rem;
+}
 
 #playerTurn {
     color: var(--pink);
@@ -294,7 +287,7 @@ button[type='submit']:hover {
     font-size: 1rem;
     text-align: center;
 }
-
+/*replay button*/
 #replay {
     background-color: var(--pink);
     color: white;
@@ -307,9 +300,4 @@ button[type='submit']:hover {
 
 #replay:hover {
     cursor:pointer;
-}
-
-.currentPlayer {
-    padding-bottom: 2rem;
-    height: 3rem;
 }

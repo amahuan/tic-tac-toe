@@ -1,3 +1,4 @@
+let players=[];
 const winningCombo=[
     [1,2,3],
     [3,6,9],
@@ -11,7 +12,12 @@ const winningCombo=[
 var winner=false;
 xTurn=true;
 const grid=document.getElementsByClassName('grid')[0];
-//creates modal for book info, modal disappears when it is submitted or when user clicks outside modal
+const playerinfo=document.querySelector('form');
+playerinfo.addEventListener('submit',getPlayers);
+const replayButton=document.getElementById('replay');
+replayButton.addEventListener('click',replay);
+
+//creates modal for player info
 const newgame=document.querySelector('#new-game');
 const modal=document.getElementsByClassName('modal')[0];
 newgame.addEventListener('click',()=>{
@@ -21,13 +27,13 @@ newgame.addEventListener('click',()=>{
 function closeStartGame() {
     modal.style.display="none";
 }
-
-const playerinfo=document.querySelector('form');
-playerinfo.addEventListener('submit',getPlayers);
-
+//gets player info from modal and creates player objects
 const getPlayerInfo = () => {
     const player1 = document.getElementById('player1name').value;
-    const player2 = document.getElementById('player2name').value;
+    var player2 = document.getElementById('player2name').value;
+    if(player2===''){
+        player2="Computer";
+    }
     const playerOne=Player(player1, marker="O", moves=[]);
     const playerTwo=Player(player2,market='X', moves=[]);
     players.push(playerOne,playerTwo);
@@ -68,7 +74,7 @@ function getPlayers(e){
     startGameToggle(); 
     return players;
 }
-  
+ //creates game panels 
 function createPlayerPanels() {
     const player1div=document.createElement('div');
     player1div.className="playerInfo";
@@ -107,14 +113,12 @@ function createPlayerPanels() {
     player2main.appendChild(player2div);
 
     
-    player1name.textContent=document.getElementById('player1name').value;
-    player2name.textContent=document.getElementById('player2name').value;
+    player1name.textContent=players[0]['name'];
+    player2name.textContent=players[1]['name'];
 
     replayButton.style="visibility: visible";
 }
-
-let players=[];
-
+//hides start button
 function startGameToggle(){
     const startButton=document.getElementsByClassName('startGame')[0]; 
     if(startButton.style.display===""){
@@ -124,7 +128,7 @@ function startGameToggle(){
         startButton.style.display="";
     }
 }
-
+//checks if Player 1 (O) wins
 function winOcheck(mark) {
     return winningCombo
     .filter((combination)=>combination.includes(mark))
@@ -135,7 +139,7 @@ function winOcheck(mark) {
     )
 );
 };
-
+//checks if Player 2 (X) wins
 function winXcheck(mark) {
     return winningCombo
     .filter((combination)=>combination.includes(mark))
@@ -146,15 +150,13 @@ function winXcheck(mark) {
     )
 );
 };
-
-const replayButton=document.getElementById('replay');
-replayButton.addEventListener('click',replay);
+//reset game for replay
 function replay() {
     clearGrid();
     xTurn=true;
     winner=false;
 }
-
+//creates tic tac toe grid and add eventlistener to grid cards     
 function createGrid(){
     for(let i=1;i<=9;i++){
         let div=document.createElement('div');
@@ -162,45 +164,53 @@ function createGrid(){
         div.setAttribute('id',i);
         grid.appendChild(div);
     }
-
-const playerTurn=document.getElementById('playerTurn');
-const squares=document.querySelectorAll('.card');
-squares.forEach((square)=>{
-    square.addEventListener('click', ()=>{
-        var markSquare=parseInt(square.id);
-        if((square.textContent==='')&&(xTurn)){
-            square.textContent=players[0]['marker'];
-            square.style="color: var(--pink)";
-            square.classList.add("o");
-            players[0].addMoves(markSquare);
-            playerTurn.textContent=players[1]['name'] + "'s Turn";
-            winOcheck(markSquare);
-            if(winOcheck(markSquare)){
-                playerTurn.textContent=players[0]['name'] + " Wins!";
-                winner=true;
-            }
-            xTurn=!xTurn;
-        }
-        else if((square.textContent==='')&&(!xTurn)){
-            square.textContent=players[1]['marker'];
-            square.style="color: var(--blue)";
-            square.classList.add("x");
-            players[1].addMoves(markSquare);
-            playerTurn.textContent=players[0]['name'] + "'s Turn";
-            winXcheck(markSquare);  
-            if(winXcheck(markSquare)){
-                playerTurn.textContent=players[1]['name'] + " Wins!";
-                winner=true;
-            }
-            xTurn=!xTurn;
-        }
-        if(winner===false&&(players[0]['moves'].length+players[1]['moves'].length===9)){
-              playerTurn.textContent="Draw! Replay?";
-        }
-    });
-    });
+    if(players[1]['name']==="Computer"){
+        playerVAI();
+    }
+    else{
+        twoPlayer();
+    }
 }
 
+function twoPlayer() {
+    const playerTurn=document.getElementById('playerTurn');
+    const squares=document.querySelectorAll('.card');
+    squares.forEach((square)=>{
+        square.addEventListener('click', ()=>{
+            var markSquare=parseInt(square.id);
+            if((square.textContent==='')&&(xTurn)){
+                square.textContent=players[0]['marker'];
+                square.style="color: var(--pink)";
+                square.classList.add("o");
+                players[0].addMoves(markSquare);
+                playerTurn.textContent=players[1]['name'] + "'s Turn";
+                winOcheck(markSquare);
+                if(winOcheck(markSquare)){
+                    playerTurn.textContent=players[0]['name'] + " Wins!";
+                    winner=true;
+                }
+                xTurn=!xTurn;
+            }
+            else if((square.textContent==='')&&(!xTurn)){
+                square.textContent=players[1]['marker'];
+                square.style="color: var(--blue)";
+                square.classList.add("x");
+                players[1].addMoves(markSquare);
+                playerTurn.textContent=players[0]['name'] + "'s Turn";
+                winXcheck(markSquare);  
+                if(winXcheck(markSquare)){
+                    playerTurn.textContent=players[1]['name'] + " Wins!";
+                    winner=true;
+                }
+                xTurn=!xTurn;
+            }
+            if(winner===false&&(players[0]['moves'].length+players[1]['moves'].length===9)){
+                playerTurn.textContent="Draw! Replay?";
+            }
+        });
+    });
+}
+//when players choose to replay, grid is cleared as well as players moves
 function clearGrid() {
     for(let i=1;i<=9;i++){
         let div=document.getElementById(i);
@@ -210,4 +220,58 @@ function clearGrid() {
     getPlayerInfo();
     players.shift();
     players.shift();
+}
+
+//player vs computer; square is randomly selected from array of empty cards
+let freeSquare=[];
+function playerVAI() {
+    const playerTurn=document.getElementById('playerTurn');
+    const squares=document.querySelectorAll('.card');
+    squares.forEach((square)=>{
+        square.addEventListener('click', ()=>{
+            var markSquare=parseInt(square.id);
+            if(square.textContent===''){
+                square.textContent=players[0]['marker'];
+                square.style="color: var(--pink)";
+                square.classList.add("o");
+                players[0].addMoves(markSquare);
+                playerTurn.textContent=players[1]['name'] + "'s Turn";
+                winOcheck(markSquare);
+                if(winOcheck(markSquare)){
+                    playerTurn.textContent=players[0]['name'] + " Wins!";
+                    winner=true;
+                }
+                if(winner===false){
+                calculateAImove(squares);
+                var random=Math.floor(Math.random() * freeSquare.length);
+                var playSquare=freeSquare[random];
+                setTimeout(()=>{
+                squares[playSquare-1].textContent=players[1]['marker'];
+                squares[playSquare-1].style="color: var(--blue)";
+                squares[playSquare-1].classList.add("x");
+                players[1].addMoves(playSquare);
+                playerTurn.textContent=players[0]['name'] + "'s Turn";
+                winXcheck(playSquare);  
+                if(winXcheck(playSquare)){
+                    playerTurn.textContent=players[1]['name'] + " Wins!";
+                    winner=true;
+                }
+            },650);
+                freeSquare=[];
+            }
+            if(winner===false&&(players[0]['moves'].length+players[1]['moves'].length===9)){
+                playerTurn.textContent="Draw! Replay?";
+            }
+        }
+    });
+    });
+}
+
+function calculateAImove(squares) {
+    for(let i=0;i<squares.length;i++){
+        if(squares[i].textContent===''){
+            freeSquare.push(i+1);
+        }
+    }
+    return freeSquare;
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="letter">T</div>
+        <div class="letter"></div>
+        <div class="letter">C</div>
+        <div class="letter"></div>
+        <div class="letter altLetter">A</div>
+        <div class="letter"></div>
+        <div class="letter">T</div>
+        <div class="letter"></div>
+        <div class="letter">E</div>
+        <div class="letter"></div>
+        <div class="letter">I</div>
+        <div class="letter"></div>
+        <div class="letter altLetter">T</div>
+        <div class="letter"></div>
+        <div class="letter altLetter">C</div>
+        <div class="letter"></div>
+        <div class="letter">O</div>
+        <div class="letter"></div>
+    </div>
+    <main class="main">
+        <div class="player" id="player1">
+        </div>
+        <div class="grid">
+        </div>
+        <div class="player" id="player2">
+        </div>
+    </main>
+    <div class="currentPlayer">
+        <p id="playerTurn"></p>
+    </div>
+    <div class="replay">
+        <button id="replay">Replay!</button>
+    </div>
+    <div class="startGame">
+        <button id="new-game">NEW GAME</button>
+    </div>
+    <div class="modal">
+        <div class="modal-container" class="hide">
+        <form id="playerinfo">
+            <div class="playerName">
+                <label for="Player 1">PLAYER 1</label> 
+                <input type="text" id="player1name" required autocomplete="off" maxlength="20">
+                <label for="Player 2">PLAYER 2</label> 
+                <input type="text" id="player2name" required autocomplete="off" maxlength="20">
+            </div>
+            <div class="submission">
+                <button id="submit" type="submit" form="playerinfo">LET'S PLAY</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

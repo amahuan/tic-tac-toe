@@ -1,0 +1,315 @@
+@font-face {
+    font-family: Poppins-Regular;
+    src: url(./font/Poppins/Poppins-Regular.ttf);
+  }
+
+  @font-face {
+  font-family: Poppins-Bold;
+    src: url(./font/Poppins/Poppins-Bold.ttf);
+  }
+
+:root {
+    font-family: 'Poppins-Regular';
+    color: white;
+    font-size: 25px;
+    --pink:  rgb(255, 51, 211);
+    --blue: rgb(25, 158, 235);
+    --green: rgb(14,201,67);
+    --gray: rgb(173, 173, 173);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 500px;
+    justify-items: center;
+    background-color:black;
+    width: 80vw;
+    height: 50vh;
+    justify-content: center;
+    align-content: center;
+    margin-top: 5rem;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: repeat(9,1fr);
+    color: var(--pink);
+    background-color: black;
+    justify-items: center;
+    align-items: center;
+    width: 50vw;
+    height: 20vh;
+    font-family: 'Poppins-Bold';
+    font-size: 1.3rem;
+    padding: 3rem;
+    gap: 1.2rem;
+}
+
+.altLetter {
+    color: white;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 125px 125px 125px;
+    grid-template-rows: 125px 125px 125px;
+    background-color: black;
+    border-color: black;
+    border-style: solid;
+    align-content: center;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-color: black;
+    border-style: solid;
+    color: var(--pink);
+    font-family: 'Poppins-Bold';
+    font-size: 70px;
+}
+
+.card:hover {
+    background-color: rgb(174, 225, 255);
+}
+
+.card.x,
+.card.o {
+    cursor: not-allowed;
+}
+
+.player {
+    display: grid;
+    grid-template-columns: 1fr;
+    color: white;
+    padding-top: 3rem;
+}
+
+#player1 {
+    padding-left: 5rem;
+    padding-right: 2rem;
+}
+
+#player2 {
+    padding-left: 2rem;
+    padding-right: 5rem;
+}
+
+.playerInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h2 {
+    font-family: 'Poppins-Bold';
+    text-align: center;
+    font-size: 0.8em;
+}
+
+h3 {
+    font-family: 'Poppins-Bold';
+    text-align: center;
+    font-size: 1.4em;
+}
+
+h3#markerO, h3#markerX {
+    color: var(--pink);
+    font-size: 1rem;
+    font-style: italic;
+}
+
+h3#markerX {
+    color: var(--blue);
+    font-size: 1rem;
+    font-style: italic;
+}
+
+h3#nameO, h3#nameX {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+input[type='radio'] {
+    color: white;
+    width: 30px;
+    margin-right: 0;
+
+}
+
+.playerName label {
+    font-size: 0.7rem;
+    position: relative;
+}
+
+/*modal for user to enter book information that will be used to create book cards*/
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* padding-top: 3rem; */
+    transform: scale(1);
+    transition: 1s ease-in-out;
+    width: 100vw;
+    height: 100vh; 
+}
+
+.modal-container {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; 
+    min-width: 350px;
+    min-height: 200px;
+    width: 25vw;
+    height: 200px; 
+    background-color: black;
+    border-color: var(--green);
+    border-width: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 2px 2px 20px rgba(245, 24, 197, 0.8);
+}
+
+.modal {
+    display: none;
+}
+  
+.playerName {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.7rem;
+    align-items: center;
+}
+
+input[type='text'] {
+    width: 8rem;
+    height: 1.2rem;
+    padding: 0.3rem;
+    border-radius: 4px;
+    border: none;
+    font-family: 'Poppins-Regular';
+    color: var(--pink);
+}
+
+input[type='text']:focus {
+    border-color: var(--blue);
+    border-style: solid;
+    border-width: 3px;
+    outline: none;
+}
+
+.startGame {
+    display: flex;
+    position: absolute;
+    top: 25vh;
+    left: 25vw;
+    width: 50vw;
+    height: 50vh;
+    background-color: black;
+    justify-items: center;
+    align-items: center;
+    padding: 20vh 15vw;
+}
+
+.startGame button {
+    width: 20vw;
+    height: 10vh;
+    font-family: 'Poppins-Regular';
+    font-weight: 800;
+    font-size: 25px;
+    border-color: white;
+    border-style: solid;
+    color: white;
+    background-color: black;
+    border-width: 0.7rem;
+}
+
+.startGame button:hover {
+    border-color: var(--pink);
+    color: var(--pink);
+    background-color: black;
+    border-width: 0.7rem;
+    cursor: pointer;
+}
+
+.submission {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
+button[type='submit'] {
+    width: 6rem;
+    height: 1rem;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.6);
+    cursor: pointer;
+    color: var(--blue);
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    font-family: 'Poppins-Regular';
+}
+
+button[type='submit']:hover {
+    background-color: var(--blue);
+    color: white;
+    font-weight: 600;
+}
+
+#playerTurn {
+    color: var(--pink);
+    font-family: 'Poppins-Regular';
+    font-size: 1rem;
+    text-align: center;
+}
+
+#replay {
+    background-color: var(--pink);
+    color: white;
+    border: none;
+    font-family: 'Poppins-Bold';
+    width: 3rem;
+    height: 1.5rem;
+    visibility: hidden;
+}
+
+#replay:hover {
+    cursor:pointer;
+}
+
+.currentPlayer {
+    padding-bottom: 2rem;
+    height: 3rem;
+}

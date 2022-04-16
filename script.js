@@ -45,20 +45,20 @@ const Player = (name, marker, moves) => {
     this.marker = marker;
     this.moves=moves;
   
-    const getMarker = () => {
-        return marker;
+    function getMarker() {
+        return this.marker;
     };
 
-    const getMoves = () => {
-        return moves;
+    function getMoves() {
+        return this.moves;
     };
 
-    const addMoves = (sq) => {
-        moves.push(sq);
-        return moves;
-    }
+    function addMoves(sq){
+        this.moves.push(sq);
+        return this.moves;
+    };
 
-    const clearMoves = () => {
+    function clearMoves() {
         moves=[];
         return moves;
     }
@@ -240,6 +240,7 @@ function playerVAI() {
                 if(winOcheck(markSquare)){
                     playerTurn.textContent=players[0]['name'] + " Wins!";
                     winner=true;
+                    return;
                 }
                 if(winner===false){
                 calculateAImove(squares);

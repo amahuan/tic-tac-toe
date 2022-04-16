@@ -34,13 +34,13 @@ const getPlayerInfo = () => {
     if(player2===''){
         player2="Computer";
     }
-    const playerOne=Player(player1, marker="O", moves=[]);
-    const playerTwo=Player(player2,market='X', moves=[]);
+    const playerOne=Player(player1, marker="O");
+    const playerTwo=Player(player2,market='X');
     players.push(playerOne,playerTwo);
     return players;
 }
 
-const Player = (name, marker, moves) => {
+const Player = (name, marker, moves=[]) => {
     this.name=name;
     this.marker = marker;
     this.moves=moves;

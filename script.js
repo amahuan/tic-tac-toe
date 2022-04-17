@@ -224,6 +224,7 @@ function clearGrid() {
 
 //player vs computer; square is randomly selected from array of empty cards
 let freeSquare=[];
+let winAI=[];
 function playerVAI() {
     const playerTurn=document.getElementById('playerTurn');
     const squares=document.querySelectorAll('.card');
@@ -236,32 +237,37 @@ function playerVAI() {
                 square.classList.add("o");
                 players[0].addMoves(markSquare);
                 playerTurn.textContent=players[1]['name'] + "'s Turn";
-                winOcheck(markSquare);
+                // winOcheck(markSquare);
                 if(winOcheck(markSquare)){
                     playerTurn.textContent=players[0]['name'] + " Wins!";
                     winner=true;
                     return;
                 }
-                if(winner===false){
+                else if(winner===false&&(players[0]['moves'].length+players[1]['moves'].length<9)){
                 calculateAImove(squares);
-                var random=Math.floor(Math.random() * freeSquare.length);
-                var playSquare=freeSquare[random];
+                var winAI=unbeatableAI(markSquare,freeSquare);
+                console.log(winAI);
+                var random=Math.floor(Math.random() * winAI.length);
+                var playSquare=winAI[random];
+                console.log(squares[playSquare-1]);
                 setTimeout(()=>{
                 squares[playSquare-1].textContent=players[1]['marker'];
                 squares[playSquare-1].style="color: var(--blue)";
                 squares[playSquare-1].classList.add("x");
                 players[1].addMoves(playSquare);
                 playerTurn.textContent=players[0]['name'] + "'s Turn";
-                winXcheck(playSquare);  
+                // winXcheck(playSquare);  
                 if(winXcheck(playSquare)){
                     playerTurn.textContent=players[1]['name'] + " Wins!";
                     winner=true;
                 }
             },700);
                 freeSquare=[];
+                winAI=[];
             }
-            if(winner===false&&(players[0]['moves'].length+players[1]['moves'].length===9)){
+            else if(winner===false&&(players[0]['moves'].length+players[1]['moves'].length===9)){
                 playerTurn.textContent="Draw! Replay?";
+                return;
             }
         }
     });
@@ -275,4 +281,17 @@ function calculateAImove(squares) {
         }
     }
     return freeSquare;
+}
+
+function unbeatableAI(mark,freeSquare){
+    var filterCombo=winningCombo
+        .filter((combination)=>combination.includes(mark));
+    return filterCombo.reduce((acc,current)=>{
+        for(let i=0;i<current.length;i++){
+            if(current[i]!==mark){
+                acc.push(current[i]);
+            }
+        }
+        return freeSquare.filter(element=>acc.includes(element));
+    },[]);
 }
